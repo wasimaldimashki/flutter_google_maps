@@ -19,15 +19,8 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
       target: LatLng(33.50983999222655, 36.275412844717195),
       zoom: 10,
     );
+    initMarker();
     super.initState();
-  }
-
-  void initMapStyle() async {
-    //Step num 1-Load String
-    var nightMapStyle = await DefaultAssetBundle.of(context)
-        .loadString('map_style/night_map_style.json');
-    //Step num 2-Google map update style
-    googleMapController.setMapStyle(nightMapStyle);
   }
 
   late GoogleMapController googleMapController;
@@ -50,7 +43,6 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
           // ),
           initialCameraPosition: initialCameraPosition,
           markers: markers,
-          mapType: MapType.normal,
         ),
         // Positioned(
         //   bottom: 16,
@@ -69,6 +61,24 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         // )
       ],
     );
+  }
+
+  void initMapStyle() async {
+    //Step num 1-Load String
+    var nightMapStyle = await DefaultAssetBundle.of(context)
+        .loadString('assets/map_style/night_map_style.json');
+    //Step num 2-Google map update style
+    googleMapController.setMapStyle(nightMapStyle);
+  }
+
+  void initMarker() {
+    var myMarker = const Marker(
+      markerId: MarkerId('1'),
+      position: LatLng(33.50983999222655, 36.275412844717195),
+    );
+
+    markers.add(myMarker);
+    setState(() {});
   }
 }
 

@@ -31,6 +31,8 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   }
 
   late GoogleMapController googleMapController;
+
+  Set<Marker> markers = {};
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -47,7 +49,8 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
           //   ),
           // ),
           initialCameraPosition: initialCameraPosition,
-          // mapType: MapType.normal,
+          markers: markers,
+          mapType: MapType.normal,
         ),
         // Positioned(
         //   bottom: 16,

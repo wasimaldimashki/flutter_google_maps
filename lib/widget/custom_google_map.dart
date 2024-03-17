@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -20,6 +22,14 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     super.initState();
   }
 
+  void initMapStyle() async {
+    //Step num 1-Load String
+    var nightMapStyle = await DefaultAssetBundle.of(context)
+        .loadString('map_style/night_map_style.json');
+    //Step num 2-Google map update style
+    googleMapController.setMapStyle(nightMapStyle);
+  }
+
   late GoogleMapController googleMapController;
   @override
   Widget build(BuildContext context) {
@@ -28,6 +38,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         GoogleMap(
           onMapCreated: (controller) {
             googleMapController = controller;
+            initMapStyle();
           },
           // cameraTargetBounds: CameraTargetBounds(
           //   LatLngBounds(
@@ -38,21 +49,21 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
           initialCameraPosition: initialCameraPosition,
           // mapType: MapType.normal,
         ),
-        Positioned(
-          bottom: 16,
-          left: 16,
-          right: 16,
-          child: ElevatedButton(
-            onPressed: () {
-              // CameraPosition newLocation = const CameraPosition(
-              //     target: LatLng(55.97757914354403, 37.58536222497034),
-              //     zoom: 10);
-              googleMapController.animateCamera(CameraUpdate.newLatLng(
-                  const LatLng(55.97757914354403, 37.58536222497034)));
-            },
-            child: const Text('Change Location'),
-          ),
-        )
+        // Positioned(
+        //   bottom: 16,
+        //   left: 16,
+        //   right: 16,
+        //   child: ElevatedButton(
+        //     onPressed: () {
+        //       // CameraPosition newLocation = const CameraPosition(
+        //       //     target: LatLng(55.97757914354403, 37.58536222497034),
+        //       //     zoom: 10);
+        //       googleMapController.animateCamera(CameraUpdate.newLatLng(
+        //           const LatLng(55.97757914354403, 37.58536222497034)));
+        //     },
+        //     child: const Text('Change Location'),
+        //   ),
+        // )
       ],
     );
   }

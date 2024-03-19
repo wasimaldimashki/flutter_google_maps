@@ -32,6 +32,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     return Stack(
       children: [
         GoogleMap(
+          zoomControlsEnabled: false,
           onMapCreated: (controller) {
             googleMapController = controller;
             initMapStyle();
@@ -72,10 +73,13 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     googleMapController.setMapStyle(nightMapStyle);
   }
 
-  void initMarker() {
+  void initMarker() async {
+    var customMarkerIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/icons/map_marker.png');
     var myMarkers = places
         .map(
           (placeModel) => Marker(
+            icon: customMarkerIcon,
             infoWindow: InfoWindow(title: placeModel.name),
             markerId: MarkerId(placeModel.id.toString()),
             position: placeModel.latLang,
@@ -83,6 +87,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         )
         .toSet();
     markers.addAll(myMarkers);
+    setState(() {});
   }
 }
 
